@@ -18,7 +18,7 @@ try:
     twilio_msg_sid = os.getenv("TWILIO_MSG_SID")
     twilio_client = Client(twilio_account_sid, twilio_auth_token)
 except:
-    logging.critical(
+    logging.error(
         "ERROR: Environment variables not found. (SSH_AUTH_FILE, TARGET_SMS_NUMBER, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_MSG_SID)")
 
 
