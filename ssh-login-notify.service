@@ -6,6 +6,6 @@ WantedBy=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/home/twilio/ssh-login-notify/venv/bin/python3 /home/twilio/ssh-login-notify/main.py
-EnvironmentFile=/home/twilio/ssh-login-notify/.secrets.env
+ExecStart=/home/twilio/projects/ssh-login-notify/venv/bin/python3 /home/twilio/projects/ssh-login-notify/main.py
+EnvironmentFile=/home/twilio/projects/ssh-login-notify/.secrets.env
 Restart=always
