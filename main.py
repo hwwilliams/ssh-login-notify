@@ -2,6 +2,7 @@
 
 import logging
 import os
+import pprint
 import select
 import subprocess
 import time
@@ -38,18 +39,22 @@ def poll_log_file(ssh_auth_file_path):
 
 def process_log_entry(log_line):
     if "sudo" and "COMMAND" in log_line:
+        print("Found sudo usage.")
         send_sms_msg(log_line)
     elif "ssh" and "session opened" in log_line:
+        print("Found SSH usage.")
         send_sms_msg(log_line)
 
 
 def send_sms_msg(log_line_msg):
+    print("Attempting to send SMS message.")
     try:
         message = twilio_client.messages.create(
             body=log_line_msg,
             messaging_service_sid=twilio_msg_sid,
             to=target_sms_number
         )
+        pprint(message)
         return get_sms_msg_status(message.sid)
     except:
         logging.error(f"ERROR: Failed to send SMS message.")
