@@ -4,7 +4,6 @@ import logging
 import os
 import select
 import subprocess
-import select
 import time
 from twilio.rest import Client
 
