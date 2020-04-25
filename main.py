@@ -27,7 +27,6 @@ def poll_log_file(ssh_auth_file_path):
         open_file = subprocess.Popen(["tail", "-F", "-n", "0", ssh_auth_file_path],
                                      encoding="utf8", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         poller_object = select.poll()
-        print()
         poller_object.register(open_file.stdout)
         while True:
             if poller_object.poll(1):
