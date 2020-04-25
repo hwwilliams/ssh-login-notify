@@ -13,12 +13,13 @@ log.setLevel(logging.INFO)
 try:
     ssh_auth_file = os.getenv("SSH_AUTH_FILE")
     target_sms_number = os.getenv("TARGET_SMS_NUMBER")
+    twilio_account_sid = os.getenv("TWILIO_ACCOUNT_SID")
+    twilio_auth_token = os.getenv("TWILIO_AUTH_TOKEN")
     twilio_msg_sid = os.getenv("TWILIO_MSG_SID")
-    twilio_token = os.getenv("TWILIO_TOKEN")
-    twilio_client = Client(twilio_msg_sid, twilio_token)
+    twilio_client = Client(twilio_account_sid, twilio_auth_token)
 except:
     logging.critical(
-        "ERROR: Environment variables not found. (TARGET_SMS_NUMBER, TWILIO_MSG_SID, TWILIO_TOKEN)")
+        "ERROR: Environment variables not found. (SSH_AUTH_FILE, TARGET_SMS_NUMBER, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_MSG_SID)")
 
 
 def poll_log_file(ssh_auth_file_path):
