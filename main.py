@@ -51,7 +51,7 @@ def send_sms_msg(log_line_msg):
             messaging_service_sid=twilio_msg_sid,
             to=target_sms_number
         )
-        get_sms_msg_status(message.sid)
+        return get_sms_msg_status(message.sid)
     except:
         logging.error(f"ERROR: Failed to send SMS message.")
 
