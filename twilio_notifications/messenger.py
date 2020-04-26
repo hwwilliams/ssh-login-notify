@@ -1,6 +1,7 @@
 import json
 import os
 import logging
+import time
 
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
@@ -9,17 +10,17 @@ logger = logging.getLogger(__name__)
 
 
 class EmptyEnvironmentVariables(Exception):
-    # Raised when environment variables are not found
+    # Custom exception raised when environment variables are not found
     def __init__(self):
         Exception.__init__(
-            self, "One or more Twilio environment variables not found. (TWILIO_ACCOUNT_SID or TWILIO_AUTH_TOKEN or TWILIO_MSG_SERVICE_SID)")
+            self, 'One or more Twilio environment variables not found. (TWILIO_ACCOUNT_SID or TWILIO_AUTH_TOKEN or TWILIO_MSG_SERVICE_SID)')
 
 
 class InvalidContacts(Exception):
-    # Raised when all available contacts have invalid phone numbers
+    # Custom exception raised when all available contacts have invalid phone numbers
     def __init__(self):
         Exception.__init__(
-            self, "All available contacts have invalid phone numbers.")
+            self, 'All available contacts have invalid phone numbers.')
 
 
 def load_twilio_env_vars():
@@ -28,9 +29,9 @@ def load_twilio_env_vars():
     empty_env_vars = []
 
     try:
-        twilio_account_sid = os.getenv("TWILIO_ACCOUNT_SID")
-        twilio_auth_token = os.getenv("TWILIO_AUTH_TOKEN")
-        twilio_msg_service_sid = os.getenv("TWILIO_MSG_SERVICE_SID")
+        twilio_account_sid = os.getenv('TWILIO_ACCOUNT_SID')
+        twilio_auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+        twilio_msg_service_sid = os.getenv('TWILIO_MSG_SERVICE_SID')
 
         if not twilio_account_sid:
             empty_env_vars.append('TWILIO_ACCOUNT_SID')
@@ -66,12 +67,12 @@ def load_contacts_file():
         with open(contacts_json_path, 'r') as file:
             contacts_dict = json.load(file)
 
-    except json.JSONDecodeError as e:
+    except json.JSONDecodeError:
         logger.error(
             f'No valid JSON data found when attempting to load contact information from: "{contacts_json_path}".')
         raise
 
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         logger.error(
             f'contacts file not found: "{contacts_json_path}"')
         raise
@@ -97,7 +98,7 @@ class Client:
         try:
             self.twilio_client = Client(twilio_account_sid, twilio_auth_token)
 
-        except TwilioRestException as e:
+        except TwilioRestException:
             logger.error('Failed to initilize Twilio client.')
             raise
 
@@ -123,13 +124,13 @@ class Client:
                 self.twilio_client.lookups.phone_numbers(
                     contact_phone_number).fetch()
 
-            except TwilioRestException as e:
+            except TwilioRestException:
                 logger.warning(
                     f'Invalid Contact Phone Number: Contact Name is "{contact_name}" with phone number "{contact_phone_number}".')
 
                 invalid_contact = {
-                    'name': f"{contact_name}",
-                    'phone_number': f"{contact_phone_number}"
+                    'name': f'{contact_name}',
+                    'phone_number': f'{contact_phone_number}'
                 }
                 invalid_contacts.append(dict(invalid_contact))
 
@@ -171,8 +172,9 @@ class Client:
                 f'All configured contact phone numbers are invalid from: "{contacts_json_path}".')
             raise InvalidContacts
 
-    def send_message(self, body_message, contact_phone_number):
+    def send_message(self, body_message, contact_name, contact_phone_number):
         logger.debug('Attempting to create SMS message.')
+
         try:
             message = self.twilio_client.messages.create(
                 body=body_message,
@@ -180,9 +182,58 @@ class Client:
                 to=contact_phone_number
             )
 
-        except TwilioRestException as e:
+        except TwilioRestException:
             logger.error(f'Failed to create SMS message.')
 
         else:
             logger.debug('Sucessfully created SMS message.')
+            logger.debug(
+                f'Attemping to send SMS message to {contact_name} at phone number {contact_phone_number}.')
             return (message)
+
+    def get_message_delivery_status(self, message_sid, contact_name, contact_phone_number):
+        logger.debug('Attempting to get SMS message delivery status.')
+
+        try:
+            while True:
+                message = self.twilio_client.messages(message_sid).fetch()
+
+                if message.status == 'delivered':
+                    logger.info('Successfully delivered SMS message.')
+                    logger.debug(
+                        f'Successfully delivered SMS message to {contact_name} at phone number {contact_phone_number}.')
+                    return
+
+                elif message.status in {'failed', 'undelivered'}:
+                    logger.error(
+                        f'Failed to deliver SMS message: {message.error-message}')
+                    logger.debug(
+                        f'Failed to deliver SMS message to {contact_name} at phone number {contact_phone_number}: {message.error-message} .')
+                    return
+
+                time.sleep(1)
+
+        except TwilioRestException:
+            logger.error('Failed to get SMS message delivery status.')
+
+
+class Messenger:
+    def __init__(self):
+        logger.debug('Attemping to initilize Twilio messgener.')
+
+        self.client = Client()
+        self.contacts = self.client.validate_contacts()
+
+        logger.debug('Successfully initilized Twilio messgener.')
+
+    def process_messasge(self, message_to_send):
+        for contact in self.contacts:
+
+            contact_name = contact['name']
+            contact_phone_number = contact['phone_number']
+
+            message = self.client.send_message(
+                message_to_send, contact_name, contact_phone_number)
+
+            message_status = self.client.get_message_delivery_status(
+                message.sid, contact_name, contact_phone_number)
