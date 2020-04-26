@@ -1,0 +1,18 @@
+[
+  {
+    "distribution": "Centos",
+    "log_path": "/var/log/secure"
+  },
+  {
+    "distribution": "Debian",
+    "log_path": "/var/log/auth.log"
+  },
+  {
+    "distribution": "RHEL",
+    "log_path": "/var/log/secure"
+  },
+  {
+    "distribution": "Ubuntu",
+    "log_path": "/var/log/auth.log"
+  }
+]
