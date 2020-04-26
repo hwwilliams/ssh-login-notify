@@ -42,9 +42,7 @@ def poll_log_file(ssh_auth_file_path):
 
 
 def process_log_entry(log_line):
-    if "sudo" and "COMMAND" in log_line:
-        send_sms_msg(log_line)
-    elif "ssh" and "session opened" in log_line:
+    if "sshd:session" and "session opened" in log_line:
         send_sms_msg(log_line)
 
 
