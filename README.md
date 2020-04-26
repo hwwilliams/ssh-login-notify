@@ -1,18 +1,18 @@
-# SSH Login & Sudo Usage Notifications via Twilio
+# SSH Login Notifications via Twilio
 
-Send an SMS message when someone logs into a server using Twilio, Python, and Systemd Journal for logging
+Send an SMS message when someone logs into a server using [Twilio](https://www.twilio.com), [Python 3](https://www.python.org/), and [Systemd Journal](https://wiki.archlinux.org/index.php/Systemd/Journal) for logging
 
 ## Prerequisites
 
 ### Install Python Virtual Environment and Systemd Development Packages
 
-##### Centos/RHEL Based Distritbutions
+#### Centos/RHEL Based Distritbutions
 
 ```bash
 yum install -y python-virtualenv python36-virtualenv systemd-devel
 ```
 
-##### Debian/Ubuntu Based Distritbutions
+#### Debian/Ubuntu Based Distritbutions
 
 ```bash
 apt install -y virtualenv python3-virtualenv build-essential libsystemd-journal-dev libsystemd-daemon-dev libsystemd-dev
