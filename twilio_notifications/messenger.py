@@ -215,6 +215,8 @@ class Client:
 
         except TwilioRestException:
             logger.error('Failed to get SMS message delivery status.')
+            logger.debug(
+                f'Failed to get SMS message to with message SID "{message_sid}".')
 
 
 class Messenger:
