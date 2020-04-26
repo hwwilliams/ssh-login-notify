@@ -71,6 +71,6 @@ Edit the new 'ssh-login-notify.service' file and update the relevent directory p
 ```bash
 ln -s <repo content directory>/ssh-login-notify/ssh-login-notify.service /etc/systemd/system/multi-user.target.wants/ssh-login-notify.service
 systemctl daemon-reload
-systemctl start ssh-login-notify
-systemctl enable ssh-login-notify
+systemctl start ssh-login-notify.service
+systemctl enable ssh-login-notify.service
 ```
