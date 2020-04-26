@@ -10,13 +10,13 @@ from systemd.journal import JournaldLogHandler
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
 
-log = logging.getLogger('__main__')
+logger = logging.getLogger('__main__')
 journald_handler = JournaldLogHandler()
 journald_handler.setFormatter(logging.Formatter(
     '[%(levelname)s] %(message)s'
 ))
-log.addHandler(journald_handler)
-log.setLevel(logging.INFO)
+logger.addHandler(journald_handler)
+logger.setLevel(logging.INFO)
 
 try:
     ssh_auth_file = os.getenv("SSH_AUTH_FILE")
@@ -26,7 +26,7 @@ try:
     twilio_msg_sid = os.getenv("TWILIO_MSG_SID")
     twilio_client = Client(twilio_account_sid, twilio_auth_token)
 except:
-    log.error(
+    logger.error(
         "ERROR: Environment variables not found. (SSH_AUTH_FILE, TARGET_SMS_NUMBER, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_MSG_SID)")
 
 
@@ -55,7 +55,7 @@ def send_sms_msg(log_line_msg):
         )
         get_sms_msg_status(message.sid)
     except TwilioRestException as e:
-        log.error(e)
+        logger.error(e)
 
 
 def get_sms_msg_status(msg_sid):
@@ -63,15 +63,15 @@ def get_sms_msg_status(msg_sid):
         while True:
             message = twilio_client.messages(msg_sid).fetch()
             if message.status == 'delivered':
-                log.info("Successfully delivered SMS message.")
+                logger.info("Successfully delivered SMS message.")
                 return
             elif message.status in {'failed', 'undelivered'}:
-                log.error(
+                logger.error(
                     f"ERROR: Failed to deliver SMS message: {message.error-message}")
                 return
             time.sleep(1)
     except TwilioRestException as e:
-        log.error(e)
+        logger.error(e)
 
 
 if __name__ == "__main__":
