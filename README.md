@@ -1,6 +1,6 @@
 # SSH Login Notifications via Twilio
 
-Send an SMS message when someone logs into a server using [Twilio](https://www.twilio.com), [Python 3](https://www.python.org/), and [Systemd Journal](https://wiki.archlinux.org/index.php/Systemd/Journal) for logging
+Send an SMS message when someone logs into a server using SSH. Notify with SMS using [Twilio](https://www.twilio.com), written in [Python 3](https://www.python.org/), and [Systemd Journal](https://wiki.archlinux.org/index.php/Systemd/Journal) for logging.
 
 ## Prerequisites
 
