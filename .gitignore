@@ -1,7 +1,6 @@
 # Project files
-*.code-workspace*
-*-hide*
-*.secrets.env
+**/settings/contacts.json
+**/settings/secrets.env
 
 # Bash
 *.sh
