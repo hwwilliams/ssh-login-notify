@@ -25,28 +25,23 @@ def get_client_credentials():
 
     empty_env_vars = []
 
-    try:
-        if not twilio_account_sid:
-            empty_env_vars.append('TWILIO_ACCOUNT_SID')
+    if not twilio_account_sid:
+        empty_env_vars.append('TWILIO_ACCOUNT_SID')
 
-        if not twilio_auth_token:
-            empty_env_vars.append('TWILIO_AUTH_TOKEN')
+    if not twilio_auth_token:
+        empty_env_vars.append('TWILIO_AUTH_TOKEN')
 
-        if not twilio_msg_service_sid:
-            empty_env_vars.append('TWILIO_MSG_SERVICE_SID')
+    if not twilio_msg_service_sid:
+        empty_env_vars.append('TWILIO_MSG_SERVICE_SID')
 
-        if empty_env_vars:
-            for env_var in empty_env_vars:
-                logger.error(
-                    f'Twilio environment variable {env_var} not found.')
-            raise EmptyEnvironmentVariables
+    if empty_env_vars:
+        for env_var in empty_env_vars:
+            logger.error(
+                f'Twilio environment variable {env_var} not found.')
+        raise EmptyEnvironmentVariables
 
-    except EmptyEnvironmentVariables:
-        raise
-
-    else:
-        logger.debug('Successfully loaded Twilio environment variables.')
-        return (twilio_account_sid, twilio_auth_token, twilio_msg_service_sid)
+    logger.debug('Successfully loaded Twilio environment variables.')
+    return (twilio_account_sid, twilio_auth_token, twilio_msg_service_sid)
 
 
 class TwilioClient:
