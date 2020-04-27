@@ -72,7 +72,7 @@ class Messenger:
 class TwilioNotification:
     def __init__(self):
         logger.debug(
-            'Attemping to initilize Twilio notifications client and contacts.')
+            'Attemping to initilize Twilio notifications client, messenger, and contacts.')
 
         self.client = TwilioClient().client
         self.msg_service_sid = TwilioClient().msg_service_sid
@@ -84,7 +84,7 @@ class TwilioNotification:
         self.valid_contacts = self.contacts.valid()
 
         logger.debug(
-            'Successfully initilized Twilio notifications client and contacts.')
+            'Successfully initilized Twilio notifications client, messenger, and contacts.')
 
     def process_messasge(self, message_to_send):
         for contact in self.valid_contacts:
