@@ -47,7 +47,7 @@ class Contacts:
     def __init__(self, twilio_client):
         logger.debug('Attempting to validate contacts.')
 
-        self.twilio_client = twilio_client
+        self.client = twilio_client
 
         (
             self.contacts_dict,
@@ -66,7 +66,7 @@ class Contacts:
                 f'Attempting to validate contact phone number: Contact Name is "{contact_name}" with phone number "{contact_phone_number}".')
 
             try:
-                self.twilio_client.lookups.phone_numbers(
+                self.client.lookups.phone_numbers(
                     contact_phone_number).fetch()
 
             except TwilioRestException as e:
