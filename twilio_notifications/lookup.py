@@ -59,6 +59,7 @@ class Contacts:
         self.invalid_contacts = []
 
         for contact in self.contacts_dict:
+
             contact_name = contact['name']
             contact_phone_number = contact['phone_number']
 
