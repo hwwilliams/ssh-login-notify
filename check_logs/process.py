@@ -88,15 +88,12 @@ class Process:
             logger.info(
                 f'Successfully initilized connection to log file for processing.')
 
-            logger.info(
-                f'Waiting for new log activity to process.')
-
             while True:
 
                 if poller_object.poll(1):
                     log_line = open_file.stdout.readline()
 
-                    if all(entry in log_line for entry in ('sshd:session' and 'session opened')):
+                    if all(entry in log_line for entry in ['sshd:session', 'session opened']):
                         logger.debug('SSH activity detected.')
                         twilio_notification(log_line)
 
