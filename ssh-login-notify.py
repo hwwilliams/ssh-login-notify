@@ -7,7 +7,7 @@ from check_logs.process import Process
 
 
 def configure_logging():
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger('__main__')
     journald_handler = JournaldLogHandler()
     journald_handler.setFormatter(logging.Formatter(
