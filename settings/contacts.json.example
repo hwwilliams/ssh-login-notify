@@ -1,6 +1,8 @@
-[
-  {
-    "name": "Foo Bar",
-    "phone_number": "+15556667777"
-  }
-]
+{
+  "contacts": [
+    {
+      "name": "Foo Bar",
+      "phone": "+15556667777"
+    }
+  ]
+}
