@@ -16,6 +16,13 @@ class InvalidContacts(Exception):
             self, 'All available contacts have invalid phone numbers.')
 
 
+class InvalidJsonContactsArray(Exception):
+    # Custom exception raised when the contacts json array was not found
+    def __init__(self):
+        Exception.__init__(
+            self, 'Failed to find valid contacts json array.')
+
+
 def get_contacts_data():
     contacts_json_path = os.path.abspath(os.path.join(
         os.path.dirname(__file__), '..', 'settings', 'contacts.json'))
@@ -37,10 +44,15 @@ def get_contacts_data():
             f'contacts file not found: "{contacts_json_path}"')
         raise
 
-    else:
+    if 'contacts' in contacts_dict:
         logger.debug(
             f'Successfully loaded contact information from: "{contacts_json_path}".')
-        return (contacts_dict, contacts_json_path)
+        return (contacts_dict['contacts'], contacts_json_path)
+
+    else:
+        logger.error(
+            f'Contacts json array not found from: "{contacts_json_path}".')
+        raise InvalidJsonContactsArray
 
 
 class Contacts:
