@@ -4,6 +4,10 @@ Send an SMS message when someone logs into a Linux server using SSH. Notify with
 
 ## Prerequisites
 
+### Twilio Account Configured
+
+Use the following [documentation](https://www.twilio.com/docs/sms/quickstart/python-msg-svc) provided by Twilio to create and do initial configuration on the account so that you have access to the necessary API keys.
+
 ### Install Python Virtual Environment and Systemd Development Packages
 
 #### Centos/RHEL Based Distritbutions
@@ -100,4 +104,14 @@ ln -s <repo content directory>/ssh-login-notify/ssh-login-notify.service /etc/sy
 systemctl daemon-reload
 systemctl start ssh-login-notify.service
 systemctl enable ssh-login-notify.service
+```
+
+### Confirm functionality using Systemd Journal
+
+Connect to the Systemd Journal and filter by the service unit with the follow switch (-f) so the console updates as logs are written.
+
+While connected to the Systemd Journal, login to the same server using another computer/device/session to confirm that it sends a SMS message.
+
+```bash
+journalctl -f -u ssh-login-notify.service
 ```
