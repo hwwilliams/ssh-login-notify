@@ -40,10 +40,10 @@ def get_log_file():
             f'contacts file not found: "{log_file_path}"')
         raise
 
-    if 'contacts' in log_dict:
+    if 'log_path' in log_dict:
         logger.debug(
             f'Successfully loaded contact information from: "{log_file_path}".')
-        return (log_dict['log_path'])
+        return (log_dict[0]['log_path'])
 
     else:
         logger.error(
