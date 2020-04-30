@@ -37,13 +37,15 @@ def get_log_file():
 
     except FileNotFoundError:
         logger.error(
-            f'contacts file not found: "{log_file_path}"')
+            f'Log file not found: "{log_file_path}"')
         raise
 
     if 'log_path' in log_dict[0]:
         logger.debug(
             f'Successfully loaded log file path from: "{log_file_path}".')
-        return (log_dict[0]['log_path'], log_file_path)
+
+        log_file = log_dict[0]['log_path']
+        return (log_file, log_file_path)
 
     else:
         logger.error(
