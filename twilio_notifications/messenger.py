@@ -63,9 +63,8 @@ class Messenger:
                 time.sleep(1)
 
         except TwilioRestException as e:
-            logger.debug(
+            logger.error(
                 f'Failed to get SMS message to with message SID "{message_sid}".')
-            logger.error('Failed to get SMS message delivery status.')
             logger.error(e)
 
 
@@ -95,5 +94,5 @@ class TwilioNotification:
             message = self.messenger.send_message(
                 message_to_send, contact_name, contact_phone_number)
 
-            message_status = self.messenger.get_message_delivery_status(
+            self.messenger.get_message_delivery_status(
                 message.sid, contact_name, contact_phone_number)
