@@ -77,11 +77,11 @@ chmod 0600 <repo content directory>/settings/secrets.env
 
 #### Secrets Environment Variable Content:
 
-| Environment Variable | Description                                                                                                                                                   |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TWILIO_ACCOUNT_SID   | This will be your Twilio Account SID which can be found on the main Twilio console page [here](https://www.twilio.com/console)                                |
-| TWILIO_AUTH_TOKEN    | This will be your Twilio Auth Token which can be found on the main Twilio console page [here](https://www.twilio.com/console)                                 |
-| TWILIO_MSG_SID       | This will be your Twilio SMS Messaging Service SID which can be found on the programable SMS console page [here](https://www.twilio.com/console/sms/services) |
+| Environment Variable   | Description                                                                                                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| TWILIO_ACCOUNT_SID     | This will be your Twilio Account SID which can be found on the main Twilio console page [here](https://www.twilio.com/console)                                |
+| TWILIO_AUTH_TOKEN      | This will be your Twilio Auth Token which can be found on the main Twilio console page [here](https://www.twilio.com/console)                                 |
+| TWILIO_MSG_SERVICE_SID | This will be your Twilio SMS Messaging Service SID which can be found on the programable SMS console page [here](https://www.twilio.com/console/sms/services) |
 
 ### Copy Existing 'ssh-login-notify.service.example' to 'ssh-login-notify.service'
 
