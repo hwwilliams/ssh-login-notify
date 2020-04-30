@@ -1,6 +1,6 @@
 # SSH Login Notifications via Twilio
 
-Send an SMS message when someone logs into a server using SSH. Notify with SMS using [Twilio](https://www.twilio.com), written in [Python 3](https://www.python.org/), and [Systemd Journal](https://wiki.archlinux.org/index.php/Systemd/Journal) for logging.
+Send an SMS message when someone logs into a Linux server using SSH. Notify with SMS using [Twilio](https://www.twilio.com), written in [Python 3](https://www.python.org/), and [Systemd Journal](https://wiki.archlinux.org/index.php/Systemd/Journal) for logging.
 
 ## Prerequisites
 
@@ -33,15 +33,40 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Copy Existing 'secrets.env.example' to '.secrets.env'
+### Copy Existing 'contacts.json.example' to 'contacts.json'
 
-Copy the existing [secrets.env.example](secrets.env.example) file within the repo content directory to a new [.secrets.env](secrets.env.example) file as references within the [ssh-login-notify.service.example](ssh-login-notify.service.example) file.
-
-Change the permissions on the new [.secrets.env](secrets.env.example) file so that no one except you can read the content.
+Copy the existing [contacts.json.example](settings\contacts.json.example) file within the settings folder of the repo content directory to a new [contacts.json](settings\contacts.json.example) file.
 
 ```bash
-cp <repo content directory>/secrets.env.example <repo content directory>/.secrets.env
-chmod 0660 <repo content directory>/.secrets.env
+cp <repo content directory>/settings/contacts.json.example <repo content directory>/settings/contacts.json
+```
+
+Edit and update the contact information within the [contacts.json](settings\contacts.json.example) file, make sure the phone number is in the [correct format](https://www.twilio.com/docs/glossary/what-e164) for Twilio to understand.
+
+### Copy Existing 'log_file.json.example' to '.secrets.env'
+
+Copy the existing [log_file.json.example](settings\log_file.json.example) file within the settings folder of the repo content directory to a new [log_file.json](settings\log_file.json.example) file.
+
+```bash
+cp <repo content directory>/settings/log_file.json.example <repo content directory>/settings/log_file.json
+```
+
+Edit and update the log path, depending on the distribution you're using the log file may be in a different place under a different name.
+
+#### Distribution Log Locations
+
+**Centos/RHEL**: /var/log/secure
+**Debian/Ubuntu**: /var/log/auth.log
+
+### Copy Existing 'secrets.env.example' to 'secrets.env'
+
+Copy the existing [secrets.env.example](settings\secrets.env.example) file within  the settings folder of the repo content directory to a new [secrets.env](settings\secrets.env.example) file.
+
+Change the permissions on the new [secrets.env](settings\secrets.env.example) file so that no one except you can read the content.
+
+```bash
+cp <repo content directory>/secrets.env.example <repo content directory>/secrets.env
+chmod 0600 <repo content directory>/secrets.env
 ```
 
 ### Update Content of New '.secrets.env' File
@@ -50,8 +75,6 @@ chmod 0660 <repo content directory>/.secrets.env
 
 | Environment Variable | Description                                                                                                                                                   |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| SSH_AUTH_FILE        | This will be the path to the SSH log file. Centos/RHEL should be /var/log/secure and Debian/Ubuntu should be /var/log/auth.log                                |
-| TARGET_SMS_NUMBER    | This will be the cell phone number that should receive text messages about SSH logins                                                                         |
 | TWILIO_ACCOUNT_SID   | This will be your Twilio Account SID which can be found on the main Twilio console page [here](https://www.twilio.com/console)                                |
 | TWILIO_AUTH_TOKEN    | This will be your Twilio Auth Token which can be found on the main Twilio console page [here](https://www.twilio.com/console)                                 |
 | TWILIO_MSG_SID       | This will be your Twilio SMS Messaging Service SID which can be found on the programable SMS console page [here](https://www.twilio.com/console/sms/services) |
