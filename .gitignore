@@ -1,6 +1,7 @@
 # Project files
 **/settings/contacts.json
 **/settings/secrets.env
+**/settings/log_file.json
 
 # Bash
 *.sh
