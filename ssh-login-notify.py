@@ -2,7 +2,7 @@
 
 import logging
 
-# from systemd.journal import JournaldLogHandler
+from systemd.journal import JournaldLogHandler
 from twilio_notifications.messenger import TwilioNotification
 from log_processor.check import Check
 
