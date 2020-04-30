@@ -7,6 +7,8 @@ import subprocess
 import select
 import logging
 
+from twilio_notifications.messenger import TwilioNotification
+
 logger = logging.getLogger(__name__)
 
 
@@ -49,7 +51,12 @@ def get_log_file():
         raise InvalidJsonLogFile
 
 
-class Check:
+def twilio_notification(message_to_send):
+    client = TwilioNotification()
+    client.process_messasge(message_to_send)
+
+
+class Process:
     def __init__(self):
 
         self.log_file = get_log_file()
@@ -65,5 +72,5 @@ class Check:
             if poller_object.poll(1):
                 log_line = open_file.stdout.readline()
                 if all(entry in log_line for entry in ('sshd:session' and 'session opened')):
-                    return log_line
+                    twilio_notification(log_line)
             time.sleep(1)

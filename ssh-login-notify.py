@@ -3,8 +3,7 @@
 import logging
 
 from systemd.journal import JournaldLogHandler
-from twilio_notifications.messenger import TwilioNotification
-from log_processor.check import Check
+from check_logs.process import Process
 
 
 def configure_logging():
@@ -24,20 +23,14 @@ def configure_logging():
     urllib3_connectionpool_logger.setLevel(logging.WARNING)
 
 
-def twilio_notifications(message_to_send):
-    client = TwilioNotification()
-    client.process_messasge(message_to_send)
-
-
-def check_log():
-    processor = Check()
-    return processor.poll()
+def process_logs():
+    process = Process()
+    process.poll()
 
 
 def main():
     configure_logging()
-    log_line = check_log
-    twilio_notifications(log_line)
+    process_logs()
 
 
 if __name__ == "__main__":
