@@ -40,14 +40,14 @@ def get_log_file():
             f'contacts file not found: "{log_file_path}"')
         raise
 
-    if 'log_path' in log_dict:
+    if 'log_path' in log_dict[0]:
         logger.debug(
             f'Successfully loaded contact information from: "{log_file_path}".')
         return (log_dict[0]['log_path'])
 
     else:
         logger.error(
-            f'Contacts json array not found from: "{log_file_path}".')
+            f'Log_path key not found from: "{log_file_path}".')
         raise InvalidJsonLogFile
 
 
