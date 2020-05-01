@@ -2,14 +2,14 @@
 
 import logging
 
-from systemd.journal import JournaldLogHandler
+from systemd import journal
 from check_logs.process import Process
 
 
 def configure_logging():
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger('__main__')
-    journald_handler = JournaldLogHandler()
+    journald_handler = journal.JournalHandler()
     journald_handler.setFormatter(logging.Formatter(
         '[%(levelname)s] %(message)s'
     ))
