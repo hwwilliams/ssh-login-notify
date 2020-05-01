@@ -8,6 +8,19 @@ Send an SMS message when someone logs into a Linux server using SSH. Notify with
 
 Use the following [documentation](https://www.twilio.com/docs/sms/quickstart/python-msg-svc) provided by Twilio to create and do initial configuration on the account so that you have access to the necessary API keys.
 
+### Configure SSH Daemon Logging
+
+The script works by checking each line of the ssh log file and searching for two strings 'sshd' and 'Accepted'.
+
+If the SSH daemon coonfiguration file 'sshd_config' is not set to log this information then the script will not report any SSH activity.
+
+Confirm that the following two lines are set appropriately:
+
+```bash
+SysLogFacility AUTHPRIV
+LogLevel INFO
+```
+
 ### Install Python Virtual Environment and Systemd Development Packages
 
 #### Centos/RHEL Based Distritbutions
