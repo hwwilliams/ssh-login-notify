@@ -7,5 +7,5 @@ WantedBy=multi-user.target
 [Service]
 Type=simple
 ExecStart=<repo content directory>/ssh-login-notify/venv/bin/python3 <repo content directory>/ssh-login-notify/ssh-login-notify.py
-EnvironmentFile=<repo content directory>/ssh-login-notify/secrets.env
+EnvironmentFile=<repo content directory>/ssh-login-notify/settings/secrets.env
 Restart=always
