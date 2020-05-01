@@ -38,7 +38,7 @@ yum install -y gcc python3-devel python-virtualenv systemd-devel
 #### Debian/Ubuntu Based Distritbutions
 
 ```bash
-apt install -y libsystemd-dev pkg-config python3-dev python3-virtualenv
+apt install -y gcc libsystemd-dev pkg-config python3-dev python3-virtualenv
 ```
 
 ## Configuration
