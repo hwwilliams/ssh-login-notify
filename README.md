@@ -1,6 +1,6 @@
 # SSH Login Notifications via Twilio
 
-Send an SMS message when someone logs into a Linux server using SSH. Notify with SMS using [Twilio](https://www.twilio.com), written in [Python 3](https://www.python.org/), and [Systemd Journal](https://wiki.archlinux.org/index.php/Systemd/Journal) for logging.
+Send an SMS message when someone logs into a Linux server using SSH. Notify with SMS using [Twilio](https://www.twilio.com), written in [Python 3](https://www.python.org/), and [Systemd Journal](https://github.com/systemd/python-systemd/) for logging.
 
 ## Prerequisites
 
@@ -19,6 +19,12 @@ Confirm that the following two lines are set appropriately:
 ```bash
 SysLogFacility AUTHPRIV
 LogLevel INFO
+```
+
+If you have to update the 'sshd_config' file then run the following
+
+```bash
+systemctl restart sshd.service
 ```
 
 ### Install Python Virtual Environment and Systemd Development Packages
