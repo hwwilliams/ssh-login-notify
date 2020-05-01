@@ -119,10 +119,9 @@ Edit the new 'ssh-login-notify.service' file and update the relevent directory p
 ### Create Symlink for Systemd Service, Reload Systemd Daemon, Start the Service, and Enable Start on Boot
 
 ```bash
-ln -s <repo content directory>/ssh-login-notify/ssh-login-notify.service /etc/systemd/system/multi-user.target.wants/ssh-login-notify.service
+ln -s <repo content directory>/ssh-login-notify/ssh-login-notify.service /etc/systemd/system/ssh-login-notify.service
 systemctl daemon-reload
-systemctl start ssh-login-notify.service
-systemctl enable ssh-login-notify.service
+systemctl enable --now ssh-login-notify.service
 ```
 
 ### Confirm functionality using Systemd Journal
