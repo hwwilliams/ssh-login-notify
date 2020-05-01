@@ -61,7 +61,8 @@ pip install -r requirements.txt
 Copy the existing [contacts.json.example](settings/contacts.json.example) file within the settings folder of the repo content directory to a new [contacts.json](settings/contacts.json.example) file.
 
 ```bash
-cp <repo content directory>/settings/contacts.json.example <repo content directory>/settings/contacts.json
+cd <repo content directory>/settings
+cp contacts.json.example contacts.json
 ```
 
 Edit and update the contact information within the [contacts.json](settings/contacts.json.example) file, make sure the phone number is in the [correct format](https://www.twilio.com/docs/glossary/what-e164) for Twilio to understand.
@@ -71,7 +72,8 @@ Edit and update the contact information within the [contacts.json](settings/cont
 Copy the existing [log_file.json.example](settings/log_file.json.example) file within the settings folder of the repo content directory to a new [log_file.json](settings/log_file.json.example) file.
 
 ```bash
-cp <repo content directory>/settings/log_file.json.example <repo content directory>/settings/log_file.json
+cd <repo content directory>/settings
+cp log_file.json.example log_file.json
 ```
 
 Edit and update the log path, depending on the distribution you're using the log file may be in a different place under a different name.
@@ -84,16 +86,18 @@ Edit and update the log path, depending on the distribution you're using the log
 
 ### Copy Existing 'secrets.env.example' to 'secrets.env'
 
-Copy the existing [secrets.env.example](settings/secrets.env.example) file within  the settings folder of the repo content directory to a new [secrets.env](settings/secrets.env.example) file.
+Copy the existing [secrets.env.example](settings/secrets.env.example) file within the settings folder of the repo content directory to a new [secrets.env](settings/secrets.env.example) file.
 
 ```bash
-cp <repo content directory>/settings/secrets.env.example <repo content directory>/settings/secrets.env
+cd <repo content directory>/settings
+cp secrets.env.example secrets.env
 ```
 
 Change the permissions on the new [secrets.env](settings/secrets.env.example) file so that no one except you can read the content.
 
 ```bash
-chmod 0600 <repo content directory>/settings/secrets.env
+cd <repo content directory>/settings
+chmod 0600 secrets.env
 ```
 
 ### Update Content of New '.secrets.env' File
