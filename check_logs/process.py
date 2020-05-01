@@ -95,7 +95,7 @@ class Process:
                 if poller_object.poll(1):
                     log_line = open_file.stdout.readline()
 
-                    if all(entry in log_line for entry in ['sshd:session', 'session opened']):
+                    if all(entry in log_line for entry in ['sshd', 'Accepted']):
                         logger.debug('SSH activity detected.')
                         twilio_notification(log_line)
 

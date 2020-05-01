@@ -1,6 +1,6 @@
 # SSH Login Notifications via Twilio
 
-Send an SMS message when someone logs into a Linux server using SSH. Notify with SMS using [Twilio](https://www.twilio.com), written in [Python 3](https://www.python.org/), and [Systemd Journal](https://wiki.archlinux.org/index.php/Systemd/Journal) for logging.
+Send an SMS message when someone logs into a Linux server using SSH. Notify with SMS using [Twilio](https://www.twilio.com), written in [Python 3](https://www.python.org/), and [Systemd Journal](https://github.com/systemd/python-systemd/) for logging.
 
 ## Prerequisites
 
@@ -8,18 +8,37 @@ Send an SMS message when someone logs into a Linux server using SSH. Notify with
 
 Use the following [documentation](https://www.twilio.com/docs/sms/quickstart/python-msg-svc) provided by Twilio to create and do initial configuration on the account so that you have access to the necessary API keys.
 
+### Configure SSH Daemon Logging
+
+The script works by checking each line of the ssh log file and searching for two strings 'sshd' and 'Accepted'.
+
+If the SSH daemon coonfiguration file 'sshd_config' is not set to log this information then the script will not report any SSH activity.
+
+Confirm that the following two lines are set appropriately:
+
+```bash
+SysLogFacility AUTHPRIV
+LogLevel INFO
+```
+
+If you have to update the 'sshd_config' file then run the following
+
+```bash
+systemctl restart sshd.service
+```
+
 ### Install Python Virtual Environment and Systemd Development Packages
 
 #### Centos/RHEL Based Distritbutions
 
 ```bash
-yum install -y python-virtualenv python36-virtualenv systemd-devel
+yum install -y gcc python3-devel python-virtualenv systemd-devel
 ```
 
 #### Debian/Ubuntu Based Distritbutions
 
 ```bash
-apt install -y virtualenv python3-virtualenv build-essential libsystemd-journal-dev libsystemd-daemon-dev libsystemd-dev
+apt install -y gcc libsystemd-dev pkg-config python3-dev python3-virtualenv
 ```
 
 ## Configuration
@@ -100,10 +119,9 @@ Edit the new 'ssh-login-notify.service' file and update the relevent directory p
 ### Create Symlink for Systemd Service, Reload Systemd Daemon, Start the Service, and Enable Start on Boot
 
 ```bash
-ln -s <repo content directory>/ssh-login-notify/ssh-login-notify.service /etc/systemd/system/multi-user.target.wants/ssh-login-notify.service
+ln -s <repo content directory>/ssh-login-notify/ssh-login-notify.service /etc/systemd/system/ssh-login-notify.service
 systemctl daemon-reload
-systemctl start ssh-login-notify.service
-systemctl enable ssh-login-notify.service
+systemctl enable --now ssh-login-notify.service
 ```
 
 ### Confirm functionality using Systemd Journal
