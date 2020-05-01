@@ -115,7 +115,8 @@ chmod 0600 secrets.env
 Copy the existing [ssh-login-notify.service.example](ssh-login-notify.service.example) file within the repo content directory to a new [ssh-login-notify.service](ssh-login-notify.service.example) file.
 
 ```bash
-cp <repo content directory>/ssh-login-notify.service.example <repo content directory>/ssh-login-notify.service
+cd <repo content directory>/settings
+cp sh-login-notify.service.example ssh-login-notify.service
 ```
 
 Edit the new 'ssh-login-notify.service' file and update the relevent directory paths to point to the repo content directory you've been working in.
