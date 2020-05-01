@@ -13,13 +13,13 @@ Use the following [documentation](https://www.twilio.com/docs/sms/quickstart/pyt
 #### Centos/RHEL Based Distritbutions
 
 ```bash
-yum install -y python-virtualenv python36-virtualenv systemd-devel
+yum install -y gcc python3-devel python-virtualenv systemd-devel
 ```
 
 #### Debian/Ubuntu Based Distritbutions
 
 ```bash
-apt install -y virtualenv python3-virtualenv build-essential libsystemd-journal-dev libsystemd-daemon-dev libsystemd-dev
+apt install -y libsystemd-dev pkg-config python3-dev python3-virtualenv
 ```
 
 ## Configuration
